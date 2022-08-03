@@ -1,0 +1,30 @@
+ <p class="title_header">Список новостей</p>
+<app-news-type-filter></app-news-type-filter>
+<div class="news_content">
+    <div>
+        <input #newsFilter placeholder="Поиск" class="input-filter-textbox" type="text">
+        <button class="control-button" (click)="onAddNews()">Добавить</button>
+        <button *appCheckAccess="'Delete'" class="control-button" (click)="onDeleteAllSelectedNews()"
+            [disabled]="!enableDeleteButton">Удалить</button>
+        <router-outlet name='editForm'></router-outlet>
+    </div>
+    <div class="news-list">
+        <table>
+            <tr class="news-block" *ngFor="let row of newsArray" (contextmenu)="onRightClick($event)">
+                <td>
+                    <app-news-block *ngFor="let newsItem of row" (deleteNews)="onDeleteNews($event)" (selectedNews)="onSelectedNews($event)" [currentNews]="newsItem">
+                    </app-news-block>
+                </td>                
+            </tr>
+        </table>
+    </div>
+    <table class="count-table">
+        <tr>
+            <td class="count-td">Все: {{newsCount$ | async}}</td>
+            <td class="count-td" *ngFor="let typeCount of newsTypesArray$ | keyvalue">{{typeCount.key}}: {{typeCount.value | async}}</td>            
+        </tr>
+    </table>
+    <app-news-context-menu #contextMenu>
+        <button class='contextMenuButton' (click)="onSelectAllNews()">Отметить всё</button>
+    </app-news-context-menu>    
+</div>

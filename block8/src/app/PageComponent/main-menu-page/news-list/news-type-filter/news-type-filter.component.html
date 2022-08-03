@@ -1,0 +1,7 @@
+<li class="filter-data-group">              
+    <ul id="type-list" *ngFor="let item of typeDataSource | keyvalue; let i = index">
+        <li>
+            <button class="type-link" routerLinkActive="active-type-link" [routerLink]="['/main/news-list']" [queryParams]="{type: item.key}" [appNewsTypeColor]="item.key | getNewsColorByTypeKey">{{item.value}}</button>
+        </li>
+    </ul>
+</li>
